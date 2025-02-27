@@ -18,4 +18,12 @@ class RandomStringRepository(private val dao: RandomStringDao) {
     suspend fun deleteAll() {
         dao.deleteAll()
     }
+
+    suspend fun makeFavourite(id: Int) {
+        dao.updateFavourite(id)
+    }
+
+    fun showAllFav(): Flow<List<RandomStringEntity>> {
+        return dao.showAllFavourite()
+    }
 }

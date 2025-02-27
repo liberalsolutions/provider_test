@@ -54,7 +54,8 @@ class RandomStringProvider(private val context: Context) {
         return RandomStringEntity(
             value = truncatedValue,
             length = truncatedValue.length,
-            created = jsonObject.getString("created")
+            created = jsonObject.getString("created"),
+            isFavourite =  false
         )
     }
 }

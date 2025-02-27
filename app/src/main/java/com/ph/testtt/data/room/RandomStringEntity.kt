@@ -8,5 +8,6 @@ data class RandomStringEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val value: String,
     val length: Int,
-    val created: String
+    val created: String,
+    val isFavourite: Boolean
 )

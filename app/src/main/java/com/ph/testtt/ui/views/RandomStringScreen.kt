@@ -1,14 +1,20 @@
 package com.ph.testtt.ui.views
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,8 +35,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+
+@Preview
+@Composable
+private fun PreviewingScreen() {
+    RandomStringScreen(Modifier.padding(20.dp))
+
+}
 
 @Composable
 fun RandomStringScreen(modifier: Modifier) {
@@ -48,7 +62,8 @@ fun RandomStringScreen(modifier: Modifier) {
     Box(modifier = modifier.padding(16.dp)){
         if (uiState is UiState.Loading) {
             Box (
-                Modifier.fillMaxSize()
+                Modifier
+                    .fillMaxSize()
                     .align(Alignment.Center),
                 contentAlignment = Alignment.Center
             ){
@@ -104,12 +119,21 @@ fun RandomStringScreen(modifier: Modifier) {
             }
 
             if (strings.isNotEmpty()) {
-                Button(
-                    onClick = { viewModel.deleteAll() },
-                    modifier = Modifier.padding(8.dp)
-                ) {
-                    Text("Delete All")
-                }
+               Row {
+                   Button(
+                       onClick = { viewModel.deleteAll() },
+                       modifier = Modifier.padding(8.dp)
+                   ) {
+                       Text("Delete All")
+                   }
+
+                   Button(
+                       onClick = { viewModel.showAllFavourite() },
+                       modifier = Modifier.padding(8.dp)
+                   ) {
+                       Text("Show Only Fav")
+                   }
+               }
             }
 
             when (uiState) {
@@ -136,13 +160,27 @@ fun RandomStringScreen(modifier: Modifier) {
                             .clickable { viewModel.deleteString(strings[item].id) },
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
-                        Column(modifier = Modifier.padding(16.dp)) {
-                            Text(
-                                text = "randomText: ${strings[item].value}",
-                                fontWeight = FontWeight.Bold
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically
+                        ){
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Text(
+                                    text = "randomText: ${strings[item].value}",
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Text(text = "Length: ${strings[item].length}")
+                                Text(text = "Created: ${strings[item].created}")
+                            }
+
+                            Image(
+                                imageVector = if (strings[item].isFavourite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                                contentDescription = "Fav ICon",
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clickable {
+                                        viewModel.setImageAsFavourite(strings[item].id)
+                                    }
                             )
-                            Text(text = "Length: ${strings[item].length}")
-                            Text(text = "Created: ${strings[item].created}")
                         }
                     }
                 }
