@@ -19,8 +19,8 @@ class RandomStringRepository(private val dao: RandomStringDao) {
         dao.deleteAll()
     }
 
-    suspend fun makeFavourite(id: Int) {
-        dao.updateFavourite(id)
+    suspend fun makeFavourite(id: Int, isFav: Boolean) {
+        dao.updateFavourite(id, isFav )
     }
 
     fun showAllFav(): Flow<List<RandomStringEntity>> {

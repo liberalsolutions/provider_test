@@ -59,9 +59,9 @@ class RandomStringViewModel @Inject constructor(
         }
     }
 
-    fun setImageAsFavourite(id: Int) {
+    fun setImageAsFavourite(id: Int, isFav: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.makeFavourite(id)
+            repository.makeFavourite(id, !isFav)
         }
     }
 

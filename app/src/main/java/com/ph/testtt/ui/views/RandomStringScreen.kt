@@ -178,7 +178,7 @@ fun RandomStringScreen(modifier: Modifier) {
                                 modifier = Modifier
                                     .size(50.dp)
                                     .clickable {
-                                        viewModel.setImageAsFavourite(strings[item].id)
+                                        viewModel.setImageAsFavourite(strings[item].id, strings[item].isFavourite)
                                     }
                             )
                         }

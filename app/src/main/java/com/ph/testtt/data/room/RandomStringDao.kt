@@ -21,8 +21,8 @@ interface RandomStringDao {
     suspend fun deleteAll()
 
 
-    @Query("UPDATE RANDOM_STRINGS SET isFavourite = 1 where id = :id")
-    fun updateFavourite(id: Int)
+    @Query("UPDATE RANDOM_STRINGS SET isFavourite = :isFav where id = :id")
+    fun updateFavourite(id: Int, isFav: Boolean)
 
     @Query("Select * From random_strings where isFavourite==1")
     fun showAllFavourite() : Flow<List<RandomStringEntity>>
